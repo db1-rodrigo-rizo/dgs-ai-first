@@ -1,0 +1,565 @@
+(.venv) PS C:\Git\dgs-ai-first\Cenário 1\Exercício 1.3\pipeline-rag> python ingestao.py
+Carregando modelo de embeddings (all-MiniLM-L6-v2)...
+modules.json: 100%|██████████████████████████████████████████████████████████████████████████████████| 349/349 [00:00<?, ?B/
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and fastdownloads.
+config_sentence_transformers.json: 100%|██████████████████████████████████████████████████████| 116/116 [00:00<00:00, 126kB/
+README.md: 100%|█████████████████████████████████████████████████████████████████████████| 10.5k/10.5k [00:00<00:00, 10.2MB/
+sentence_bert_config.json: 100%|███████████████████████████████████████████████████████████| 53.0/53.0 [00:00<00:00, 46.7kB/
+config.json: 100%|███████████████████████████████████████████████████████████████████████████████████| 612/612 [00:00<?, ?B/
+model.safetensors: 100%|█████████████████████████████████████████████████████████████████| 90.9M/90.9M [00:12<00:00, 7.09MB/
+Loading weights: 100%|████████████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 8339.06it/
+tokenizer_config.json: 100%|█████████████████████████████████████████████████████████████████████████| 350/350 [00:00<?, ?B/
+vocab.txt: 100%|███████████████████████████████████████████████████████████████████████████| 232k/232k [00:00<00:00, 4.23MB/
+tokenizer.json: 100%|██████████████████████████████████████████████████████████████████████| 466k/466k [00:00<00:00, 10.1MB/
+special_tokens_map.json: 100%|███████████████████████████████████████████████████████████████████████| 112/112 [00:00<?, ?B/
+config.json: 100%|████████████████████████████████████████████████████████████████████████████| 190/190 [00:00<00:00, 186kB/
+
+Processando 5 documento(s)...
+  FAQ-atendimento.md: 10 chunks
+  POL-001-politica-devolucao.md: 8 chunks
+  PROC-042-frete-especial-v1.md: 10 chunks
+  PROC-042-v2-frete-especial-revisado.md: 11 chunks
+  SLA-2024-tabela-sla-clientes.md: 16 chunks
+
+Gerando embeddings para 55 chunks...
+Batches: 100%|██████████████████████████████████████████████████████████████████████████████████| 2/2 [00:01<00:00,  1.36it/
+
+Total de chunks armazenados na collection 'novatech': 55
+(.venv) PS C:\Git\dgs-ai-first\Cenário 1\Exercício 1.3\pipeline-rag> python busca.py   
+Digite sua pergunta: Qual é o prazo para devolução?
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and fastdownloads.
+Loading weights: 100%|████████████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 7331.58it/
+
+Pergunta: Qual é o prazo para devolução?
+────────────────────────────────────────────────────────────────────────
+
+[1] Score de similaridade: 0.5656
+    Arquivo : POL-001-politica-devolucao.md
+    Seção   : 3.5. Custos de devolução
+    Texto   :
+[Seção: 3.5. Custos de devolução]
+Quando a entrega envolver múltiplos volumes, o cliente pode devolver volumes individuais. Cada volume devolvido segue o mesmrocedimento da seção 3.3. O cálculo de reembolso é proporcional ao peso/valor do volume devolvido, conforme o CT-e.
+- Defeito ou erro da NovaTech (carga errada, avaria em trânsito): devolução sem custo para o cliente.
+- Desistência do cliente (carga correta, sem defeito): o custo do frete reverso é do cliente, calculado com os mesmos multipadores do frete original.
+- Prazo expirado (solicitação após 7 dias úteis): não elegível para devolução padrão. Encaminhar ao Comercial para negociaçãaso a caso.
+
+────────────────────────────────────────────────────────────────────────
+
+[2] Score de similaridade: 0.5460
+    Arquivo : PROC-042-frete-especial-v1.md
+    Seção   : 3. Prazo de entrega para frete especial
+    Texto   :
+[Seção: 3. Prazo de entrega para frete especial]
+O prazo de entrega para frete especial é calculado como o prazo padrão da rota + 2 dias úteis adicionais para manuseio de ca pesada.
+
+────────────────────────────────────────────────────────────────────────
+
+[3] Score de similaridade: 0.5361
+    Arquivo : FAQ-atendimento.md
+    Seção   : Item 3 — "Cliente perguntou se pode devolver carga perigosa. O que respondo?"
+    Texto   :
+[Seção: Item 3 — "Cliente perguntou se pode devolver carga perigosa. O que respondo?"]
+informações desatualizadas ou imprecisas. Aviso interno: Este FAQ foi criado organicamente pelo time de atendimento ao longo 2 anos. As respostas refletem a experiência prática dos atendentes, mas NÃO foram validadas contra os documentos oficiais (, PROC, SLA). Use com cautela e sempre confirme informações críticas na documentação normativa.
+Na prática, a gente orienta o cliente a ligar no ramal 4500 (Gestão de Riscos). Oficialmente não pode pelo processo padrão,  já tiveram casos em que o pessoal de Riscos autorizou exceção. Então não diga que é impossível — diga que precisa de tratamo especial.
+
+────────────────────────────────────────────────────────────────────────
+
+[4] Score de similaridade: 0.5248
+    Arquivo : PROC-042-frete-especial-v1.md
+    Seção   : 4. Condições especiais
+    Texto   :
+[Seção: 4. Condições especiais]
+O prazo de entrega para frete especial é calculado como o prazo padrão da rota + 2 dias úteis adicionais para manuseio de ca pesada.
+- Cargas acima de 5.000kg requerem aprovação prévia do gerente de operações regional.
+- Cargas perigosas com peso acima de 500kg seguem tabela específica (PROC-043: Frete de Cargas Perigosas).
+- Descontos de volume (mais de 10 fretes especiais/mês para o mesmo cliente) devem ser negociados pelo Comercial e registradem aditivo contratual.
+
+────────────────────────────────────────────────────────────────────────
+
+[5] Score de similaridade: 0.5202
+    Arquivo : FAQ-atendimento.md
+    Seção   : Item 45 — "O cliente quer desconto no frete. Posso dar?"
+    Texto   :
+[Seção: Item 45 — "O cliente quer desconto no frete. Posso dar?"]
+o primeiro retorno ao cliente (mesmo que seja 'estamos verificando'). Resolução é quando o problema é efetivamente resolvido Gold tem 2h de resposta e 24h de resolução. Silver é 4h e 48h. Standard é 8h e 72h. Para incidentes críticos, os prazos sãonores — veja a tabela SLA-2024.
+Atendente não tem autonomia para dar desconto. Para clientes com mais de 10 fretes especiais por mês, existe desconto automáo na tabela (veja PROC-042). Para outros casos, encaminhe ao Comercial com justificativa.
+
+────────────────────────────────────────────────────────────────────────
+
+(.venv) PS C:\Git\dgs-ai-first\Cenário 1\Exercício 1.3\pipeline-rag> python busca.py
+Digite sua pergunta: Qual o prazo de devolução
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and fastdownloads.
+Loading weights: 100%|████████████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 6415.12it/
+
+Pergunta: Qual o prazo de devolução
+────────────────────────────────────────────────────────────────────────
+
+[1] Score de similaridade: 0.5564
+    Arquivo : POL-001-politica-devolucao.md
+    Seção   : 3.5. Custos de devolução
+    Texto   :
+[Seção: 3.5. Custos de devolução]
+Quando a entrega envolver múltiplos volumes, o cliente pode devolver volumes individuais. Cada volume devolvido segue o mesmrocedimento da seção 3.3. O cálculo de reembolso é proporcional ao peso/valor do volume devolvido, conforme o CT-e.
+- Defeito ou erro da NovaTech (carga errada, avaria em trânsito): devolução sem custo para o cliente.
+- Desistência do cliente (carga correta, sem defeito): o custo do frete reverso é do cliente, calculado com os mesmos multipadores do frete original.
+- Prazo expirado (solicitação após 7 dias úteis): não elegível para devolução padrão. Encaminhar ao Comercial para negociaçãaso a caso.
+
+────────────────────────────────────────────────────────────────────────
+
+[2] Score de similaridade: 0.5274
+    Arquivo : FAQ-atendimento.md
+    Seção   : Item 3 — "Cliente perguntou se pode devolver carga perigosa. O que respondo?"
+    Texto   :
+[Seção: Item 3 — "Cliente perguntou se pode devolver carga perigosa. O que respondo?"]
+informações desatualizadas ou imprecisas. Aviso interno: Este FAQ foi criado organicamente pelo time de atendimento ao longo 2 anos. As respostas refletem a experiência prática dos atendentes, mas NÃO foram validadas contra os documentos oficiais (, PROC, SLA). Use com cautela e sempre confirme informações críticas na documentação normativa.
+Na prática, a gente orienta o cliente a ligar no ramal 4500 (Gestão de Riscos). Oficialmente não pode pelo processo padrão,  já tiveram casos em que o pessoal de Riscos autorizou exceção. Então não diga que é impossível — diga que precisa de tratamo especial.
+
+────────────────────────────────────────────────────────────────────────
+
+[3] Score de similaridade: 0.5250
+    Arquivo : FAQ-atendimento.md
+    Seção   : Item 45 — "O cliente quer desconto no frete. Posso dar?"
+    Texto   :
+[Seção: Item 45 — "O cliente quer desconto no frete. Posso dar?"]
+o primeiro retorno ao cliente (mesmo que seja 'estamos verificando'). Resolução é quando o problema é efetivamente resolvido Gold tem 2h de resposta e 24h de resolução. Silver é 4h e 48h. Standard é 8h e 72h. Para incidentes críticos, os prazos sãonores — veja a tabela SLA-2024.
+Atendente não tem autonomia para dar desconto. Para clientes com mais de 10 fretes especiais por mês, existe desconto automáo na tabela (veja PROC-042). Para outros casos, encaminhe ao Comercial com justificativa.
+
+────────────────────────────────────────────────────────────────────────
+
+[4] Score de similaridade: 0.5209
+    Arquivo : PROC-042-frete-especial-v1.md
+    Seção   : 3. Prazo de entrega para frete especial
+    Texto   :
+[Seção: 3. Prazo de entrega para frete especial]
+O prazo de entrega para frete especial é calculado como o prazo padrão da rota + 2 dias úteis adicionais para manuseio de ca pesada.
+
+────────────────────────────────────────────────────────────────────────
+
+[5] Score de similaridade: 0.5066
+    Arquivo : PROC-042-frete-especial-v1.md
+    Seção   : 4. Condições especiais
+    Texto   :
+[Seção: 4. Condições especiais]
+O prazo de entrega para frete especial é calculado como o prazo padrão da rota + 2 dias úteis adicionais para manuseio de ca pesada.
+- Cargas acima de 5.000kg requerem aprovação prévia do gerente de operações regional.
+- Cargas perigosas com peso acima de 500kg seguem tabela específica (PROC-043: Frete de Cargas Perigosas).
+- Descontos de volume (mais de 10 fretes especiais/mês para o mesmo cliente) devem ser negociados pelo Comercial e registradem aditivo contratual.
+
+────────────────────────────────────────────────────────────────────────
+
+(.venv) PS C:\Git\dgs-ai-first\Cenário 1\Exercício 1.3\pipeline-rag> python busca.py
+Digite sua pergunta: 
+Nenhuma pergunta fornecida.
+(.venv) PS C:\Git\dgs-ai-first\Cenário 1\Exercício 1.3\pipeline-rag> python busca.py
+Digite sua pergunta: Posso devolver carga perigosa?
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and fastdownloads.
+Loading weights: 100%|████████████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 6381.48it/
+
+Pergunta: Posso devolver carga perigosa?
+────────────────────────────────────────────────────────────────────────
+
+[1] Score de similaridade: 0.5154
+    Arquivo : PROC-042-frete-especial-v1.md
+    Seção   : 4. Condições especiais
+    Texto   :
+[Seção: 4. Condições especiais]
+O prazo de entrega para frete especial é calculado como o prazo padrão da rota + 2 dias úteis adicionais para manuseio de ca pesada.
+- Cargas acima de 5.000kg requerem aprovação prévia do gerente de operações regional.
+- Cargas perigosas com peso acima de 500kg seguem tabela específica (PROC-043: Frete de Cargas Perigosas).
+- Descontos de volume (mais de 10 fretes especiais/mês para o mesmo cliente) devem ser negociados pelo Comercial e registradem aditivo contratual.
+
+────────────────────────────────────────────────────────────────────────
+
+[2] Score de similaridade: 0.5123
+    Arquivo : FAQ-atendimento.md
+    Seção   : Item 22 — "Cliente quer saber sobre seguro de carga. O que falar?"
+    Texto   :
+[Seção: Item 22 — "Cliente quer saber sobre seguro de carga. O que falar?"]
+Não existe tier Platinum na NovaTech. Às vezes o cliente confunde com outra transportadora ou com o programa de fidelidade ago que foi descontinuado em 2022. Oriente que nossos tiers são Gold, Silver e Standard e peça o número do contrato para veriar.
+A NovaTech oferece seguro de carga como adicional. O valor é 0,3% do valor declarado da mercadoria para cargas padrão e 0,8%ra cargas perigosas. Detalhe: isso vale para contratos a partir de 2023. Contratos mais antigos podem ter percentuais diferes — confirme com o Comercial.
+
+────────────────────────────────────────────────────────────────────────
+
+[3] Score de similaridade: 0.4990
+    Arquivo : POL-001-politica-devolucao.md
+    Seção   : 2. Escopo
+    Texto   :
+[Seção: 2. Escopo]
+Esta política define as regras e procedimentos para devolução de mercadorias transportadas pela NovaTech, aplicável a todos tipos de cliente e categorias de carga, salvo exceções explicitamente listadas na seção 3.
+Aplica-se a todas as devoluções solicitadas por clientes da NovaTech após a entrega da mercadoria. Não se aplica a mercadoriainda em trânsito (para essas, consultar PROC-088: Procedimento de Interceptação de Carga).
+
+────────────────────────────────────────────────────────────────────────
+
+[4] Score de similaridade: 0.4984
+    Arquivo : FAQ-atendimento.md
+    Seção   : Item 27 — "O tracking mostra 'em trânsito' há 5 dias. O que faço?"
+    Texto   :
+[Seção: Item 27 — "O tracking mostra 'em trânsito' há 5 dias. O que faço?"]
+A NovaTech oferece seguro de carga como adicional. O valor é 0,3% do valor declarado da mercadoria para cargas padrão e 0,8%ra cargas perigosas. Detalhe: isso vale para contratos a partir de 2023. Contratos mais antigos podem ter percentuais diferes — confirme com o Comercial.
+Depende da rota. Rotas para o Norte podem levar até 10 dias úteis. Para Sul/Sudeste, mais de 3 dias parado é estranho. Abra chamado de rastreamento e classifique como prioridade alta se for Gold ou se o valor da carga for acima de R$ 50.000.
+
+────────────────────────────────────────────────────────────────────────
+
+[5] Score de similaridade: 0.4935
+    Arquivo : FAQ-atendimento.md
+    Seção   : Item 3 — "Cliente perguntou se pode devolver carga perigosa. O que respondo?"
+    Texto   :
+[Seção: Item 3 — "Cliente perguntou se pode devolver carga perigosa. O que respondo?"]
+informações desatualizadas ou imprecisas. Aviso interno: Este FAQ foi criado organicamente pelo time de atendimento ao longo 2 anos. As respostas refletem a experiência prática dos atendentes, mas NÃO foram validadas contra os documentos oficiais (, PROC, SLA). Use com cautela e sempre confirme informações críticas na documentação normativa.
+Na prática, a gente orienta o cliente a ligar no ramal 4500 (Gestão de Riscos). Oficialmente não pode pelo processo padrão,  já tiveram casos em que o pessoal de Riscos autorizou exceção. Então não diga que é impossível — diga que precisa de tratamo especial.
+
+────────────────────────────────────────────────────────────────────────
+
+(.venv) PS C:\Git\dgs-ai-first\Cenário 1\Exercício 1.3\pipeline-rag> python busca.py
+Digite sua pergunta: Qual o SLA do cliente Gold?
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and fastdownloads.
+Loading weights: 100%|████████████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 7136.12it/
+
+Pergunta: Qual o SLA do cliente Gold?
+────────────────────────────────────────────────────────────────────────
+
+[1] Score de similaridade: 0.5713
+    Arquivo : SLA-2024-tabela-sla-clientes.md
+    Seção   : 5. Medição e reportes
+    Texto   :
+[Seção: 5. Medição e reportes]
+SLA no mês: registro interno, sem impacto contratual. - Segunda violação no mesmo mês: crédito de 5% sobre o valor do frete chamado afetado. - Terceira violação ou mais no mesmo mês: crédito de 10% + reunião obrigatória com o gerente de conta (Goldu gerente de operações (Silver/Standard).
+Os SLAs são medidos pelo sistema de chamados (Azure DevOps) a partir do timestamp de abertura do chamado. O relógio de SLA pa fora do horário comercial (08h-18h, dias úteis) para chamados gerais, mas não pausa para incidentes críticos de clientes G.
+
+────────────────────────────────────────────────────────────────────────
+
+[2] Score de similaridade: 0.5443
+    Arquivo : SLA-2024-tabela-sla-clientes.md
+    Seção   : 1. Classificação de clientes
+    Texto   :
+[Seção: 1. Classificação de clientes]
+Tier: Gold | Critério de elegibilidade: Contrato anual acima de R$ 500.000 OU mais de 200 operações/mês | Revisão: Semestral
+
+────────────────────────────────────────────────────────────────────────
+
+[3] Score de similaridade: 0.5386
+    Arquivo : FAQ-atendimento.md
+    Seção   : Item 15 — "Cliente diz que é Platinum. Existe esse tier?"
+    Texto   :
+[Seção: Item 15 — "Cliente diz que é Platinum. Existe esse tier?"]
+Acima de 500kg, aplica a tabela de multiplicadores por região. Cuidado: existem duas versões da PROC-042. A mais recente temltiplicadores mais altos. Na dúvida, use a mais recente (v2), mas se o cliente reclamar do valor, pode ser que o contrato deainda esteja na tabela antiga.
+Não existe tier Platinum na NovaTech. Às vezes o cliente confunde com outra transportadora ou com o programa de fidelidade ago que foi descontinuado em 2022. Oriente que nossos tiers são Gold, Silver e Standard e peça o número do contrato para veriar.
+
+────────────────────────────────────────────────────────────────────────
+
+[4] Score de similaridade: 0.5374
+    Arquivo : SLA-2024-tabela-sla-clientes.md
+    Seção   : 2. Tabela de SLAs
+    Texto   :
+[Seção: 2. Tabela de SLAs]
+Métrica: Gerente de conta dedicado | Gold: Sim | Silver: Não | Standard: Não
+
+────────────────────────────────────────────────────────────────────────
+
+[5] Score de similaridade: 0.5247
+    Arquivo : SLA-2024-tabela-sla-clientes.md
+    Seção   : 2. Tabela de SLAs
+    Texto   :
+[Seção: 2. Tabela de SLAs]
+Métrica: Relatório mensal de performance | Gold: Sim (detalhado) | Silver: Sim (resumido) | Standard: Sob demanda
+
+────────────────────────────────────────────────────────────────────────
+
+(.venv) PS C:\Git\dgs-ai-first\Cenário 1\Exercício 1.3\pipeline-rag> python busca.py
+Digite sua pergunta: Frete para 600kg para Manaus?
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and fastdownloads.
+Loading weights: 100%|████████████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 8728.42it/
+
+Pergunta: Frete para 600kg para Manaus?
+────────────────────────────────────────────────────────────────────────
+
+[1] Score de similaridade: 0.5066
+    Arquivo : FAQ-atendimento.md
+    Seção   : Item 27 — "O tracking mostra 'em trânsito' há 5 dias. O que faço?"
+    Texto   :
+[Seção: Item 27 — "O tracking mostra 'em trânsito' há 5 dias. O que faço?"]
+A NovaTech oferece seguro de carga como adicional. O valor é 0,3% do valor declarado da mercadoria para cargas padrão e 0,8%ra cargas perigosas. Detalhe: isso vale para contratos a partir de 2023. Contratos mais antigos podem ter percentuais diferes — confirme com o Comercial.
+Depende da rota. Rotas para o Norte podem levar até 10 dias úteis. Para Sul/Sudeste, mais de 3 dias parado é estranho. Abra chamado de rastreamento e classifique como prioridade alta se for Gold ou se o valor da carga for acima de R$ 50.000.
+
+────────────────────────────────────────────────────────────────────────
+
+[2] Score de similaridade: 0.4857
+    Arquivo : PROC-042-frete-especial-v1.md
+    Seção   : 2. Fórmula de cálculo
+    Texto   :
+[Seção: 2. Fórmula de cálculo]
+Definir a fórmula e os parâmetros para cálculo de frete especial aplicável a cargas com peso acima de 500kg.
+O frete especial é calculado como:
+
+Valor do frete = Valor base × Multiplicador regional × Fator de peso
+
+Onde:
+- Valor base = tarifa publicada na tabela mensal de fretes.
+- Multiplicador regional = fator aplicado conforme a região de destino (seção 2.1).
+- Fator de peso = 1.0 para cargas de 500kg a 1.000kg; 1.2 para cargas de 1.001kg a 3.000kg; 1.5 para cargas acima de 3.000kg
+
+────────────────────────────────────────────────────────────────────────
+
+[3] Score de similaridade: 0.4848
+    Arquivo : PROC-042-v2-frete-especial-revisado.md
+    Seção   : 1. Objetivo
+    Texto   :
+[Seção: 1. Objetivo]
+**Versão:** 2.0
+**Data de emissão:** 10/11/2023
+**Responsável:** Diretoria Comercial
+**Status:** Este documento não possui indicação formal de que substitui o PROC-042 v1. Ambos coexistem no SharePoint sem hiequia clara.
+Definir a fórmula e os parâmetros atualizados para cálculo de frete especial aplicável a cargas com peso acima de 500kg. Os tiplicadores foram revisados para refletir os custos operacionais atualizados de cada região.
+
+────────────────────────────────────────────────────────────────────────
+
+[4] Score de similaridade: 0.4819
+    Arquivo : PROC-042-frete-especial-v1.md
+    Seção   : 4. Condições especiais
+    Texto   :
+[Seção: 4. Condições especiais]
+O prazo de entrega para frete especial é calculado como o prazo padrão da rota + 2 dias úteis adicionais para manuseio de ca pesada.
+- Cargas acima de 5.000kg requerem aprovação prévia do gerente de operações regional.
+- Cargas perigosas com peso acima de 500kg seguem tabela específica (PROC-043: Frete de Cargas Perigosas).
+- Descontos de volume (mais de 10 fretes especiais/mês para o mesmo cliente) devem ser negociados pelo Comercial e registradem aditivo contratual.
+
+────────────────────────────────────────────────────────────────────────
+
+[5] Score de similaridade: 0.4754
+    Arquivo : PROC-042-v2-frete-especial-revisado.md
+    Seção   : 2. Fórmula de cálculo
+    Texto   :
+[Seção: 2. Fórmula de cálculo]
+Definir a fórmula e os parâmetros atualizados para cálculo de frete especial aplicável a cargas com peso acima de 500kg. Os tiplicadores foram revisados para refletir os custos operacionais atualizados de cada região.
+O frete especial é calculado como:
+
+Valor do frete = Valor base × Multiplicador regional × Fator de peso
+
+Onde:
+- Valor base = tarifa publicada na tabela mensal de fretes.
+- Multiplicador regional = fator aplicado conforme a região de destino (seção 2.1).
+- Fator de peso = 1.0 para cargas de 500kg a 1.000kg; 1.15 para cargas de 1.001kg a 3.000kg; 1.4 para cargas acima de 3.000k
+
+────────────────────────────────────────────────────────────────────────
+
+(.venv) PS C:\Git\dgs-ai-first\Cenário 1\Exercício 1.3\pipeline-rag> python busca.py
+Digite sua pergunta: Qual o multiplicador para o Sudeste?
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and fastdownloads.
+Loading weights: 100%|████████████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 6417.69it/
+
+Pergunta: Qual o multiplicador para o Sudeste?
+────────────────────────────────────────────────────────────────────────
+
+[1] Score de similaridade: 0.5921
+    Arquivo : PROC-042-frete-especial-v1.md
+    Seção   : 2.1. Multiplicadores regionais
+    Texto   :
+[Seção: 2.1. Multiplicadores regionais]
+Região: Sudeste | Multiplicador: 1.0
+
+────────────────────────────────────────────────────────────────────────
+
+[2] Score de similaridade: 0.5833
+    Arquivo : PROC-042-v2-frete-especial-revisado.md
+    Seção   : 2.1. Multiplicadores regionais (atualizados em novembro/2023)
+    Texto   :
+[Seção: 2.1. Multiplicadores regionais (atualizados em novembro/2023)]
+Região: Sudeste | Multiplicador: 1.1
+
+────────────────────────────────────────────────────────────────────────
+
+[3] Score de similaridade: 0.5353
+    Arquivo : PROC-042-frete-especial-v1.md
+    Seção   : 2.1. Multiplicadores regionais
+    Texto   :
+[Seção: 2.1. Multiplicadores regionais]
+Região: Centro-Oeste | Multiplicador: 1.3
+
+────────────────────────────────────────────────────────────────────────
+
+[4] Score de similaridade: 0.5324
+    Arquivo : PROC-042-frete-especial-v1.md
+    Seção   : 2.1. Multiplicadores regionais
+    Texto   :
+[Seção: 2.1. Multiplicadores regionais]
+Região: Sul | Multiplicador: 1.2
+
+────────────────────────────────────────────────────────────────────────
+
+[5] Score de similaridade: 0.5220
+    Arquivo : PROC-042-v2-frete-especial-revisado.md
+    Seção   : 2.1. Multiplicadores regionais (atualizados em novembro/2023)
+    Texto   :
+[Seção: 2.1. Multiplicadores regionais (atualizados em novembro/2023)]
+Região: Centro-Oeste | Multiplicador: 1.4
+
+────────────────────────────────────────────────────────────────────────
+
+(.venv) PS C:\Git\dgs-ai-first\Cenário 1\Exercício 1.3\pipeline-rag> python pipeline.py
+Digite sua pergunta: 
+Nenhuma pergunta fornecida.
+(.venv) PS C:\Git\dgs-ai-first\Cenário 1\Exercício 1.3\pipeline-rag> python pipeline.py "Qual o prazo de devolução para cargerigosa?"
+Recuperando chunks relevantes...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and fastdownloads.
+Loading weights: 100%|████████████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 7877.85it/
+
+========================================================================
+SYSTEM PROMPT
+========================================================================
+## IDENTIDADE E PROPÓSITO
+
+Você é o NovaTech Assistant, um assistente especializado em consulta documental para
+a equipe de Atendimento ao Cliente da NovaTech Logística.
+
+Seu único propósito é ajudar os atendentes a localizar, interpretar e apresentar
+informações contidas na documentação oficial da empresa — incluindo manuais de
+procedimento, políticas de compliance, tabelas de SLA, regras de cálculo de frete
+e normas de segurança de carga.
+
+Você não é um assistente de propósito geral. Não responde perguntas fora do
+escopo da documentação NovaTech. Não oferece opiniões ou recomendações pessoais.
+Não executa tarefas fora do domínio de consulta documental.
+
+Você serve exclusivamente aos atendentes que precisam responder clientes com
+agilidade e precisão. O cliente final não interage com você diretamente.
+
+──────────────────────────────────────────────────
+
+## REGRAS E GUARDRAILS
+
+R1 — CITAÇÃO OBRIGATÓRIA DE FONTE
+Toda informação factual apresentada deve ser acompanhada da fonte de origem,
+com nome do documento e seção (ou título da página, no caso de Confluence).
+Nunca omita a citação, mesmo que a informação pareça óbvia.
+Formato: [Fonte: {nome_do_documento} · {seção_ou_página}]
+
+Se o chunk não indicar uma seção específica (campo ausente ou vazio), use o
+identificador mais descritivo disponível — como o título do documento ou o
+identificador do chunk (ex: "Tabela SLA-2024"). Nunca escreva "sem seção
+especificada": prefira registrar o que há.
+
+R2 — PROIBIÇÃO DE INVENÇÃO
+É absolutamente proibido inventar, estimar ou inferir prazos, valores, percentuais
+ou condições que não estejam explicitamente presentes nos trechos da documentação
+fornecidos no contexto desta consulta.
+Se um dado não está nos trechos recuperados, ele não existe para você.
+
+R3 — INFORMAÇÃO NÃO ENCONTRADA
+Se os trechos disponíveis no contexto não contiverem a informação necessária para
+responder à pergunta do atendente, responda com o seguinte padrão:
+
+  "Não encontrei essa informação na documentação disponível para esta consulta.
+   Recomendo escalar para o supervisor ou consultar diretamente
+   [fonte sugerida se houver indício, ou 'a equipe responsável pela área']."
+
+Nunca tente "aproximar" uma resposta ou dar uma resposta parcial sem deixar
+explícito que ela é incompleta.
+
+ATENÇÃO — DISTINÇÃO ENTRE "NÃO ENCONTRADO" E "EXPLICITAMENTE PROIBIDO":
+Quando o chunk indicar que uma categoria está excluída de uma regra ou política
+(ex: "exceto cargas perigosas"), isso não é ausência de informação — é uma regra
+explícita de exclusão. Nesse caso, responda afirmando a proibição ou restrição,
+não dizendo que a informação não foi encontrada.
+
+R4 — LINGUAGEM
+Responda sempre em português formal, porém acessível.
+Evite jargão técnico desnecessário (ex: prefira "prazo de entrega" a "lead time").
+Quando termos técnicos forem inevitáveis, explique brevemente entre parênteses
+na primeira ocorrência.
+
+R5 — ESCOPO ESTRITO
+Recuse perguntas fora do escopo documental com uma frase direta e sem explicações
+longas. Exemplo: "Esse assunto está fora do escopo da documentação NovaTech.
+Posso ajudar com dúvidas sobre procedimentos, prazos, frete ou políticas internas."
+
+──────────────────────────────────────────────────
+
+## ESTRUTURA ESPERADA PARA CADA RESPOSTA
+
+Toda resposta deve seguir este modelo fixo. O objetivo é que o atendente
+consuma a informação em menos de 30 segundos.
+
+─────────────────────────────────────────
+RESPOSTA DIRETA
+  Uma a três frases com a resposta objetiva à pergunta feita.
+  Sem rodeios. Vá direto ao ponto.
+
+DETALHES (se necessário)
+  Informações complementares relevantes, em bullet points curtos.
+  Use somente se o contexto exigir. Omita se a resposta direta
+  já for suficiente.
+
+FONTE(S)
+  [Fonte: {nome_do_documento} · {seção_ou_página}]
+  Liste todas as fontes utilizadas na resposta, uma por linha.
+  Se houver múltiplas fontes, liste todas.
+
+ATENÇÃO (se aplicável)
+  Use somente quando houver conflito de versão, dado próximo de vencer,
+  exceção importante ou necessidade de escalonamento.
+  Se não houver, omita completamente este bloco.
+─────────────────────────────────────────
+
+Regras de formatação:
+- Nunca use parágrafos longos. Prefira frases curtas.
+
+========================================================================
+CONTEXTO RECUPERADO (documentação NovaTech)
+========================================================================
+
+[Trecho 1]
+Arquivo : PROC-042-frete-especial-v1.md
+Seção   : 4. Condições especiais
+Score   : 0.5858
+Texto   :
+[Seção: 4. Condições especiais]
+O prazo de entrega para frete especial é calculado como o prazo padrão da rota + 2 dias úteis adicionais para manuseio de ca pesada.
+- Cargas acima de 5.000kg requerem aprovação prévia do gerente de operações regional.
+- Cargas perigosas com peso acima de 500kg seguem tabela específica (PROC-043: Frete de Cargas Perigosas).
+- Descontos de volume (mais de 10 fretes especiais/mês para o mesmo cliente) devem ser negociados pelo Comercial e registradem aditivo contratual.
+────────────────────────────────────────────────────────────────────────
+
+[Trecho 2]
+Arquivo : PROC-042-frete-especial-v1.md
+Seção   : 3. Prazo de entrega para frete especial
+Score   : 0.5635
+Texto   :
+[Seção: 3. Prazo de entrega para frete especial]
+O prazo de entrega para frete especial é calculado como o prazo padrão da rota + 2 dias úteis adicionais para manuseio de ca pesada.
+────────────────────────────────────────────────────────────────────────
+
+[Trecho 3]
+Arquivo : FAQ-atendimento.md
+Seção   : Item 3 — "Cliente perguntou se pode devolver carga perigosa. O que respondo?"
+Score   : 0.5567
+Texto   :
+[Seção: Item 3 — "Cliente perguntou se pode devolver carga perigosa. O que respondo?"]
+informações desatualizadas ou imprecisas. Aviso interno: Este FAQ foi criado organicamente pelo time de atendimento ao longo 2 anos. As respostas refletem a experiência prática dos atendentes, mas NÃO foram validadas contra os documentos oficiais (, PROC, SLA). Use com cautela e sempre confirme informações críticas na documentação normativa.
+Na prática, a gente orienta o cliente a ligar no ramal 4500 (Gestão de Riscos). Oficialmente não pode pelo processo padrão,  já tiveram casos em que o pessoal de Riscos autorizou exceção. Então não diga que é impossível — diga que precisa de tratamo especial.
+────────────────────────────────────────────────────────────────────────
+
+[Trecho 4]
+Arquivo : FAQ-atendimento.md
+Seção   : Item 22 — "Cliente quer saber sobre seguro de carga. O que falar?"
+Score   : 0.5500
+Texto   :
+[Seção: Item 22 — "Cliente quer saber sobre seguro de carga. O que falar?"]
+Não existe tier Platinum na NovaTech. Às vezes o cliente confunde com outra transportadora ou com o programa de fidelidade ago que foi descontinuado em 2022. Oriente que nossos tiers são Gold, Silver e Standard e peça o número do contrato para veriar.
+A NovaTech oferece seguro de carga como adicional. O valor é 0,3% do valor declarado da mercadoria para cargas padrão e 0,8%ra cargas perigosas. Detalhe: isso vale para contratos a partir de 2023. Contratos mais antigos podem ter percentuais diferes — confirme com o Comercial.
+────────────────────────────────────────────────────────────────────────
+
+[Trecho 5]
+Arquivo : POL-001-politica-devolucao.md
+Seção   : 2. Escopo
+Score   : 0.5473
+Texto   :
+[Seção: 2. Escopo]
+Esta política define as regras e procedimentos para devolução de mercadorias transportadas pela NovaTech, aplicável a todos tipos de cliente e categorias de carga, salvo exceções explicitamente listadas na seção 3.
+Aplica-se a todas as devoluções solicitadas por clientes da NovaTech após a entrega da mercadoria. Não se aplica a mercadoriainda em trânsito (para essas, consultar PROC-088: Procedimento de Interceptação de Carga).
+────────────────────────────────────────────────────────────────────────
+
+========================================================================
+PERGUNTA DO ATENDENTE
+========================================================================
+Qual o prazo de devolução para carga perigosa?
+========================================================================
