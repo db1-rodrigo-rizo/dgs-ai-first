@@ -1,0 +1,30 @@
+Comparação entre a minha revisão de código e a feita pelo Claude
+================================================================
+
+A minha revisão apontou 4 problemas, enquanto que a revisão feita pelo Claude apontou 8.
+
+Dos 4 problemas que apontei:
+ - 2 eram violações explícitas do AGENTS.md
+ - 1 era uma falha de segurança
+ - 1 era um bug em potencial
+
+Dos 8 problemas apontados pelo Claude:
+ - 4 eram violações explícitas do AGENTS.md
+ - 1 era falha de segurança
+ - 3 eram bug em potencial
+
+O que foi intersecção:
+
+ - Ambas as avaliações apontaram a violação do AGENTS.md que fala do uso de `as any`.
+ - Ambas as avaliações apontaram o fato do e-mail estar sendo logado (falha de segurança).
+ - Ambas as avaliações apontaram o uso de `console.log(...)` como violação do AGENTS.md.
+ - Ambas as avaliações apontaram a ausência de `try..catch` como um bug em potencial.
+
+Onde a revisão do Claude foi melhor:
+
+ - Somente o Claude apontou o `require` dinâmico dentro da função como violação do AGENTS.md
+ - Somente o Claude apontou que `COSMOS_CONNECTION_STRING` pode ser `undefined` como falha de segurança
+ - Somente o Claude apontou que o `CosmosClient` é instanciado a cada request como bug em potencial
+ - Somente o Claude apontou que o uso do HTTP 200 para criação do recurso como bug em potencial (menor)
+
+Portanto, a minha revisão foi muito deficitária em relação à revisão da IA, o que eu já esperava, pois não tenho pleno conhecimento de vários dos assuntos presentes. A base de conhecimento específico do Claude é muito maior.
